@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. Clean URL: /login ko seedhe desktop.html par map karein
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^login/?$ desktop.html [L]
+
+    # 2. Clean URL: /desktop ko desktop.html par map karein
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^desktop/?$ desktop.html [L]
+
+    # 3. Clean URL: /mobile ko mobile.html par map karein
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^mobile/?$ mobile.html [L]
+
+    # 4. Root URL (/) ko desktop.html par map karein
+    RewriteRule ^$ desktop.html [L]
+
+    # 5. Saari existing static files (js, css, img, fonts) ko direct serve hone dein
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # 6. SPA fallback: Kisi bhi doosre page route ko desktop.html par bhejein
+    RewriteRule . desktop.html [L]
+</IfModule>
